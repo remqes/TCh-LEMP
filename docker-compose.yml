@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - 6666:80
+    volumes:
+      - ./php:/app
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - backend-net
+      - frontend-net
+    depends_on:
+      - php
+
+  php:
+    image: php:8.0-fpm
+    volumes:
+      - ./php:/app
+    networks:
+      - backend-net
+
+  mysql:
+    image: mysql:latest
+    environment:
+        MYSQL_USER: 'user'
+        MYSQL_PASSWORD: 'password'
+        MYSQL_ROOT_PASSWORD: 'root'
+        MYSQL_DATABASE: 'testDB'
+    volumes:
+      - 'DBvolume:/var/lib/mysql'
+    networks:
+      - backend-net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports: 
+      - 6001:80
+    links:
+      - 'mysql:db'
+    depends_on:
+      - mysql
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+  frontend-net:
+
+volumes:
+  DBvolume: 
