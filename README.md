@@ -1,6 +1,6 @@
 <h2>Laboratorium programowania aplikacji w chmurach obliczeniowych.</h2>
 
-###P9.2. Na poprzednich laboratoriach budowane były obrazy kontenerów z serwerem Apache, PHP.  W tym zadaniu należy zbudować prosty plik docker-compose.yml, który pozwoli na uruchomienie  znanej z innych zajęć, usługi LEMP wraz z phpMyAdmin. Stack LEMP składa się z następujących  usług składowych: 
+### P9.2. Na poprzednich laboratoriach budowane były obrazy kontenerów z serwerem Apache, PHP.  W tym zadaniu należy zbudować prosty plik docker-compose.yml, który pozwoli na uruchomienie  znanej z innych zajęć, usługi LEMP wraz z phpMyAdmin. Stack LEMP składa się z następujących  usług składowych: 
 - L - dla Linux;
 - E - dla Nginx;
 - M - dla MySQL;
