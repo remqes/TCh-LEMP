@@ -18,7 +18,7 @@
 Mikrousługi, które nie muszą być skalowane, aby aplikacja działała prawidłowo to serwery bazy danych, aplikacje do monitorowania oraz usługi backendowe, natomiast skalowane mogą być usługi frontendowe.
 
 Uruchomienie usługi w klastrze Swarm.
-![docker-deploy](/images/images/docker10-deploy.PNG)
+![docker-deploy](/images/docker10-deploy.PNG)
 
 Poprawność działania dla poszczególnych mikrousług.
 ![docker-nginx](/images/docker10-nginx.PNG)
