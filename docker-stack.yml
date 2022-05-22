@@ -1,0 +1,84 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - 6666:80
+    volumes:
+      - ./php:/app
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - backend-net
+      - frontend-net
+    depends_on:
+      - php
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  php:
+    image: php:8.0-fpm
+    volumes:
+      - ./php:/app
+    networks:
+      - backend-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  mysql:
+    image: mysql:latest
+    environment:
+        - "MYSQL_DATABASE=testDBTCh"
+        - "MYSQL_USER=username"
+        - "MYSQL_PASSWORD=password"
+        - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+      - 'DBvolume:/var/lib/mysql'
+    networks:
+      - backend-net
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports: 
+      - 6001:80
+    depends_on:
+      - mysql
+    networks:
+      - backend-net
+    environment:
+      - "PMA_HOST=mysql"
+      - "MYSQL_USER=username"
+      - "MYSQL_PASSWORD=password"
+      - "MYSQL_ROOT_PASSWORD=root"
+    deploy:
+        replicas: 1
+        restart_policy:
+            condition: on-failure
+        
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports: 
+      - "8080:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy: 
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  backend-net:
+  frontend-net:
+
+volumes:
+  DBvolume: 
